@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduQuest - AI Cosmic Learning Assistant</title>
+  <!-- Google Fonts: Rounded & Modern Quicksand & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="theme-cosmo">
+  <!-- Background Star Field Effect -->
+  <div class="stars-container">
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Sidebar / Gamification Dashboard -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <i data-lucide="orbit" class="brand-icon"></i>
+          <span>EduQuest</span>
+        </div>
+        <button class="close-sidebar-btn" id="closeSidebarBtn">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <!-- Student Profile Card -->
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="avatar-container">
+            <img src="assets/mascot.png" alt="Student Mascot" class="student-avatar">
+            <span class="online-indicator"></span>
+          </div>
+          <div class="profile-info">
+            <h3>Space Cadet</h3>
+            <span class="rank" id="studentRank">Novice Explorer</span>
+          </div>
+        </div>
+        
+        <!-- XP Progress Bar -->
+        <div class="xp-container">
+          <div class="xp-labels">
+            <span class="xp-level" id="levelDisplay">Level 1</span>
+            <span class="xp-text" id="xpText">0 / 100 XP</span>
+          </div>
+          <div class="xp-bar-bg">
+            <div class="xp-bar-fill" id="xpBarFill" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Streak Counter & Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-box streak-box">
+            <i data-lucide="flame" class="stat-icon flame-icon"></i>
+            <div class="stat-vals">
+              <span class="stat-val" id="streakVal">1</span>
+              <span class="stat-lbl">Day Streak</span>
+            </div>
+          </div>
+          <div class="stat-box xp-total-box">
+            <i data-lucide="award" class="stat-icon award-icon"></i>
+            <div class="stat-vals">
+              <span class="stat-val" id="totalXpVal">0</span>
+              <span class="stat-lbl">Total XP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Tutors Selection -->
+      <nav class="tutors-section">
+        <h4 class="section-title">Select Your Tutor</h4>
+        <div class="tutor-list">
+          <!-- Cosmo (Science) -->
+          <div class="tutor-item active" data-tutor="cosmo">
+            <div class="tutor-avatar science-avatar">
+              <i data-lucide="atom"></i>
+            </div>
+            <div class="tutor-meta">
+              <h5>Cosmo</h5>
+              <p>Science & Space</p>
+            </div>
+            <span class="tutor-pulse science-pulse"></span>
+          </div>
+          <!-- Alpha (Math) -->
+          <div class="tutor-item" data-tutor="alpha">
+            <div class="tutor-avatar math-avatar">
+              <i data-lucide="binary"></i>
+            </div>
+            <div class="tutor-meta">
+              <h5>Alpha</h5>
+              <p>Math & Logic</p>
+            </div>
+            <span class="tutor-pulse math-pulse"></span>
+          </div>
+          <!-- Clio (History) -->
+          <div class="tutor-item" data-tutor="clio">
+            <div class="tutor-avatar history-avatar">
+              <i data-lucide="compass"></i>
+            </div>
+            <div class="tutor-meta">
+              <h5>Clio</h5>
+              <p>History & Culture</p>
+            </div>
+            <span class="tutor-pulse history-pulse"></span>
+          </div>
+          <!-- Pixel (Coding) -->
+          <div class="tutor-item" data-tutor="pixel">
+            <div class="tutor-avatar coding-avatar">
+              <i data-lucide="terminal"></i>
+            </div>
+            <div class="tutor-meta">
+              <h5>Pixel</h5>
+              <p>Coding & Tech</p>
+            </div>
+            <span class="tutor-pulse coding-pulse"></span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Achievement Badges -->
+      <div class="achievements-section">
+        <h4 class="section-title">My Badges</h4>
+        <div class="badges-grid" id="badgesGrid">
+          <div class="badge-item locked" id="badge-first-msg" title="Send your first message">
+            <i data-lucide="message-square"></i>
+            <span>First Word</span>
+          </div>
+          <div class="badge-item locked" id="badge-quiz-master" title="Answer a quiz question correctly">
+            <i data-lucide="check-circle"></i>
+            <span>Quiz Whiz</span>
+          </div>
+          <div class="badge-item locked" id="badge-explorer" title="Switch between all tutors">
+            <i data-lucide="globe"></i>
+            <span>Explorer</span>
+          </div>
+          <div class="badge-item locked" id="badge-level-up" title="Reach Level 2">
+            <i data-lucide="trending-up"></i>
+            <span>Rising Star</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="chat-workspace">
+      <!-- Chat Header -->
+      <header class="chat-header">
+        <div class="header-left">
+          <button class="open-sidebar-btn" id="openSidebarBtn">
+            <i data-lucide="menu"></i>
+          </button>
+          <div class="active-tutor-profile">
+            <div class="tutor-badge-container">
+              <div class="active-tutor-avatar" id="headerTutorAvatar">
+                <i data-lucide="atom"></i>
+              </div>
+              <span class="active-pulse" id="headerTutorPulse"></span>
+            </div>
+            <div class="active-tutor-info">
+              <h2 id="headerTutorName">Cosmo</h2>
+              <p id="headerTutorStatus">Ready to explore the universe!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Live API Status Badge -->
+          <div class="live-api-badge" id="liveApiBadge">
+            <span class="live-badge-dot"></span>
+            <span class="live-badge-text">Live AI Active</span>
+          </div>
+          <!-- Sound Toggle -->
+          <button class="header-action-btn" id="soundToggleBtn" title="Toggle Sound Effects">
+            <i data-lucide="volume-2" id="soundIcon"></i>
+          </button>
+          <!-- Study Mode Toggle -->
+          <div class="mode-toggle-container">
+            <span class="mode-label">Playful</span>
+            <label class="switch">
+              <input type="checkbox" id="studyModeCheckbox" checked>
+              <span class="slider round"></span>
+            </label>
+            <span class="mode-label active">Study</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Chat Screen / Bubble Container -->
+      <section class="chat-screen" id="chatScreen">
+        <!-- Floating XP gain indicator -->
+        <div class="xp-bubble-indicator" id="xpBubbleIndicator">+10 XP</div>
+
+        <!-- Chat Scroll Container -->
+        <div class="chat-scroll-container" id="chatScrollContainer">
+          
+          <!-- Welcoming Message Bubble -->
+          <div class="message-group bot-message-group animate-pop">
+            <div class="message-avatar science-avatar">
+              <i data-lucide="atom"></i>
+            </div>
+            <div class="message-content-wrapper">
+              <div class="sender-name">Cosmo</div>
+              <div class="message-bubble bubble-pop">
+                <p>Hello, young explorer! 🚀 I'm <strong>Cosmo</strong>, your science guide. What celestial mysteries shall we uncover today? You can ask me anything about planets, stars, chemistry, or physics!</p>
+              </div>
+              <div class="message-time">Just Now</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Suggestion Chips Container -->
+        <div class="suggestions-outer">
+          <div class="suggestions-container" id="suggestionsContainer">
+            <!-- Chips dynamically loaded based on tutor selection -->
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator-container hidden" id="typingIndicator">
+          <div class="typing-avatar science-avatar" id="typingAvatar">
+            <i data-lucide="atom"></i>
+          </div>
+          <div class="typing-bubble">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chat Input Section -->
+      <footer class="chat-footer">
+        <form class="input-form" id="inputForm" autocomplete="off">
+          <div class="input-actions-left">
+            <button type="button" class="input-action-btn" id="attachBtn" title="Upload Image/Homework">
+              <i data-lucide="image"></i>
+            </button>
+            <button type="button" class="input-action-btn" id="emojiBtn" title="Pick Emoji">
+              <i data-lucide="smile"></i>
+            </button>
+          </div>
+          
+          <div class="text-input-wrapper">
+            <input type="text" id="chatInput" placeholder="Ask Cosmo a science question..." required autocomplete="off">
+          </div>
+
+          <div class="input-actions-right">
+            <button type="button" class="input-action-btn voice-btn" id="voiceBtn" title="Voice Typing">
+              <i data-lucide="mic"></i>
+            </button>
+            <button type="submit" class="send-btn" id="sendBtn">
+              <i data-lucide="send"></i>
+            </button>
+          </div>
+        </form>
+      </footer>
+    </main>
+
+    <!-- Emoji Picker Panel (Hidden) -->
+    <div class="emoji-picker hidden" id="emojiPicker">
+      <div class="emoji-tabs">
+        <button type="button" class="emoji-tab active" data-tab="smileys">😀</button>
+        <button type="button" class="emoji-tab" data-tab="space">🪐</button>
+        <button type="button" class="emoji-tab" data-tab="school">🎒</button>
+        <button type="button" class="emoji-tab" data-tab="food">🍕</button>
+      </div>
+      <div class="emoji-grid" id="emojiGrid">
+        <!-- Emoji grids will be populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Up Modal Overlay -->
+  <div class="modal-overlay hidden" id="levelUpModal">
+    <div class="modal-content">
+      <div class="confetti-container" id="confettiContainer"></div>
+      <div class="modal-badge-glow">
+        <i data-lucide="sparkles" class="star-sparkle"></i>
+        <i data-lucide="star" class="modal-level-star"></i>
+      </div>
+      <h2>LEVEL UP!</h2>
+      <p class="modal-subtitle">You've reached a new stage of exploration</p>
+      <div class="level-badge" id="modalLevelBadge">Level 2</div>
+      <p class="modal-reward-text">+100 XP Bonus Awarded 🎓</p>
+      <button class="modal-close-btn" id="modalCloseBtn">Continue Journey</button>
+    </div>
+  </div>
+
+  <!-- Audio Synthesis Context Loader -->
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide icons on page load
+    lucide.createIcons();
+  </script>
+</body>
+</html>
